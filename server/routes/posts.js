@@ -1,3 +1,8 @@
-export const getPosts = (req, res) => {
-  res.send("Hello there");
-};
+import express from "express";
+import { postsController } from "../controllers/posts.js";
+
+const postRoutes = express.Router();
+
+postRoutes.get("/", postsController);
+
+export default postRoutes;
