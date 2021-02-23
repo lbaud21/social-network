@@ -1,18 +1,14 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: "Title is equired",
-    minlength: 4,
-    maxlength: 150,
+    required: true,
   },
   body: {
     type: String,
-    required: "Body is required",
-    minlength: 4,
-    maxlength: 1200,
+    required: true,
   },
 });
 
-export default mongoose.model("Post", postSchema);
+module.exports = mongoose.model("Post", postSchema);

@@ -1,19 +1,14 @@
-import Post from "../models/posts.js";
+const Post = require("../models/posts.js");
 
-export const getPosts = (req, res) => {
+exports.getPosts = (req, res) => {
   res.json({
     posts: [{ title: "first post" }, { title: "second post" }],
   });
 };
 
-export const createPost = (req, res) => {
+exports.createPost = (req, res) => {
   const post = new Post(req.body);
-  post.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
+  post.save().then((data) => {
     res.status(200).json({
       post: data,
     });

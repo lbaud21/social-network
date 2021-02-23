@@ -1,12 +1,12 @@
-import express from "express";
-import morgan from "morgan";
-import postRoutes from "./routes/posts.js";
-import bodyParser from "body-parser";
+const express = require("express");
+const morgan = require("morgan");
+const postRoutes = require("./routes/posts.js");
+const bodyParser = require("body-parser");
 
 //database config
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 // load env variables
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 
 //db connection
@@ -27,7 +27,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(morgan("dev"));
-app.use(bodyParser.json());
-app.use("/", postRoutes);
+app.use(bodyParser.json()); //or app.use(express.json())
+app.use(postRoutes);
 
 app.listen(PORT, () => console.log("Listening on port:", PORT));

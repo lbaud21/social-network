@@ -1,9 +1,10 @@
-import express from "express";
-import { getPosts, createPost } from "../controllers/posts.js";
+const express = require("express");
+const { getPosts, createPost } = require("../controllers/posts.js");
+const { userValidationRules, validate } = require("../validator/index.js");
 
-const postRoutes = express.Router();
+const router = express.Router();
 
-postRoutes.get("/", getPosts);
-postRoutes.post("/post", createPost);
+router.get("/", getPosts);
+router.post("/post", userValidationRules(), validate, createPost);
 
-export default postRoutes;
+module.exports = router;
