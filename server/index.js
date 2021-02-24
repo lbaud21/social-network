@@ -4,12 +4,13 @@ const postRoutes = require("./routes/posts.js");
 const bodyParser = require("body-parser");
 
 //database config
-const mongoose = require("mongoose");
+const connectDatabase = require("./database/index.js");
 // load env variables
 const dotenv = require("dotenv");
 dotenv.config();
 
-//db connection
+connectDatabase();
+/*/db connection
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -20,7 +21,7 @@ mongoose
 mongoose.connection.on("error", (err) => {
   console.log(`DB connection error: ${err.message}`);
 });
-//
+/*/
 
 const app = express();
 
