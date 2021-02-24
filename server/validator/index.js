@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const userValidationRules = () => {
+const postValidationRules = () => {
   return [
     body("title", "A title is required").notEmpty(),
     body("title", "Title should be between 4 to 150 characters").isLength({
@@ -9,7 +9,7 @@ const userValidationRules = () => {
   ];
 };
 
-const validate = (req, res, next) => {
+const postValidation = (req, res, next) => {
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
@@ -19,12 +19,12 @@ const validate = (req, res, next) => {
   const extractedErrors = [];
   errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
 
-  return res.status(422).json({
+  return res.status(400).json({
     errors: extractedErrors,
   });
 };
 
 module.exports = {
-  userValidationRules,
-  validate,
+  postValidationRules,
+  postValidation,
 };
