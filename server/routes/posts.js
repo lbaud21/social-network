@@ -6,7 +6,7 @@ const { getPosts, createPost } = require("../controllers/posts.js");
 // } = require("../validator/index.js");
 
 const { postValidationRules } = require("../validator/postValidationRules.js");
-const { validate } = require("../validator/index.js");
+const { validate } = require("../validator/validate.js");
 
 const router = express.Router();
 

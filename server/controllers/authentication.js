@@ -7,7 +7,7 @@ exports.signup = async (req, res) => {
 
   if (userExists)
     return res.status(403).json({
-      error: "You already have an account",
+      error: "This email is already associated to an account",
     });
 
   const user = await new User(req.body);
