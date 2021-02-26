@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const postRoutes = require("./routes/posts.js");
 const authRoutes = require("./routes/authentication.js");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 //database config
 const connectDatabase = require("./database/index.js");
@@ -18,6 +19,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(morgan("dev"));
 app.use(bodyParser.json()); //or app.use(express.json())
+app.use(cookieParser());
 
 app.use(postRoutes);
 app.use(authRoutes);
