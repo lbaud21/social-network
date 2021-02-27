@@ -9,6 +9,7 @@ exports.userById = (req, res, next, id) => {
     }
     //adds profile object containing user info in req object
     req.profile = user;
+    next();
   });
 };
 
@@ -23,7 +24,7 @@ exports.hasAuthorization = (req, res, next) => {
   }
 };
 
-exports.allUsers = (req, res) => {
+exports.getAllUsers = (req, res) => {
   User.find((err, users) => {
     if (err) {
       return res.status(400).json({
@@ -32,4 +33,10 @@ exports.allUsers = (req, res) => {
     }
     res.json({ users });
   }).select("name email created updated");
+};
+
+exports.getUser = (req, res) => {
+  req.profile.hashed_password = undefined;
+  req.profile.salt = undefined;
+  return res.json(req.profile);
 };
