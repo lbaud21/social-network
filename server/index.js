@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const postRoutes = require("./routes/posts.js");
 const authRoutes = require("./routes/authentication.js");
+const userRoutes = require("./routes/user.js");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const connectDatabase = require("./database/index.js");
@@ -26,6 +27,7 @@ app.use(cookieParser());
 
 app.use(postRoutes);
 app.use(authRoutes);
+app.use(userRoutes);
 
 //express-jwt error catching middleware
 app.use(function (err, req, res, next) {
