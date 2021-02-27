@@ -7,7 +7,13 @@ const { requireSignin } = require("../controllers/authentication.js");
 const { postValidationRules } = require("../validator/postValidationRules.js");
 const { validate } = require("../validator/validate.js");
 
-router.get("/", requireSignin, getPosts);
-router.post("/post", postValidationRules(), validate, createPost);
+router.get("/", getPosts);
+router.post(
+  "/post",
+  requireSignin,
+  postValidationRules(),
+  validate,
+  createPost
+);
 
 module.exports = router;
