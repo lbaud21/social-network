@@ -4,19 +4,22 @@ const postRoutes = require("./routes/posts.js");
 const authRoutes = require("./routes/authentication.js");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-
-//database config
 const connectDatabase = require("./database/index.js");
-// load env variables
 const dotenv = require("dotenv");
+
+// load env variables//
 dotenv.config();
 
+//Connect database//
 connectDatabase();
 
+//Create express app//
 const app = express();
 
+//Define port//
 const PORT = process.env.PORT || 5000;
 
+//Middlewares//
 app.use(morgan("dev"));
 app.use(bodyParser.json()); //or app.use(express.json())
 app.use(cookieParser());
@@ -24,4 +27,14 @@ app.use(cookieParser());
 app.use(postRoutes);
 app.use(authRoutes);
 
+//express-jwt error catching middleware
+app.use(function (err, req, res, next) {
+  if (err.name === "UnauthorizedError") {
+    res.status(401).json({
+      error: "Unauthorized!",
+    });
+  }
+});
+
+//Listen
 app.listen(PORT, () => console.log("Listening on port:", PORT));
