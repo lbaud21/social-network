@@ -9,6 +9,8 @@ exports.userById = (req, res, next, id) => {
       });
     }
     //adds profile object containing user info in req object
+    //req.profile is a true instance of User model, ot a copy
+    //it can be used later to modify this instance which is stored in the database
     req.profile = user;
     next();
   });
@@ -44,7 +46,8 @@ exports.getUser = (req, res) => {
 
 exports.updateUser = (req, res) => {
   let user = req.profile;
-
+  //we use lodash extend to mutate the original req.body which is a User model instance
+  //this way, we can save it later to directly modify the database data
   user = _.extend(user, req.body);
   user.updated = Date.now();
 
@@ -57,5 +60,19 @@ exports.updateUser = (req, res) => {
     user.hashed_password = undefined;
     user.salt = undefined;
     res.json({ user });
+  });
+};
+
+exports.deleteUser = (req, res) => {
+  let user = req.profile;
+  user.remove((err, user) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    res.json({ message: "User deleted successfully" });
   });
 };
